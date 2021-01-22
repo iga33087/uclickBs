@@ -6,6 +6,17 @@ Vue.use(VueRouter)
 
 const routes = [
   {
+    path: '/poject',
+    name: 'poject',
+    meta:{
+      title:"專案列表",
+      icon:"el-icon-tickets",
+      show:true
+    },
+    component: () => import('../views/poject.vue'),
+    children:[]
+  },
+  {
     path: '/viewList',
     name: 'viewList',
     meta:{

@@ -53,10 +53,10 @@ export default {
   login(x) {
     return axios.post(baseUrl+"login",x).then(res=>res.data)
   },
-  getViewList() {
-    return axios.get(baseUrl+"getViewList").then(res=>res.data)
+  getProject() {
+    return axios.get(baseUrl+"getProject").then(res=>res.data)
   },
-  deleteViewList(x) {
-    return axios.delete(baseUrl+"deleteViewList?id="+x).then(res=>res.data)
+  deleteProject(x) {
+    return axios.delete(baseUrl+"deleteProject?id="+x).then(res=>res.data)
   }
 }
