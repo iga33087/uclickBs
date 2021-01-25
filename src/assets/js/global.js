@@ -14,5 +14,10 @@ export default {
   },
   YYYYMMDDHHmm(x) {
     return moment(x).format("YYYY/MM/DD HH:mm")
+  },
+  getProjectTitle(list,x) {
+    let arr=list.filter(res=> res.id==x)
+    let res=arr[0] ? arr[0].title : "專案不存在"
+    return res
   }
 }

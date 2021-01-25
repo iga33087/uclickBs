@@ -6,7 +6,7 @@
     </div>
     <div class="leftMenuLogo"></div>
     <div class="leftMenuBox" :class="{'open':isOpen}">
-      <LeftMenuItem v-for="(item,index) in getRouter()" :key="index" :data="item"></LeftMenuItem>
+      <LeftMenuItem v-for="(item,index) in getRouter()" :key="index" :data="item" v-show="item.meta.show"></LeftMenuItem>
     </div>
   </div>
 </template>

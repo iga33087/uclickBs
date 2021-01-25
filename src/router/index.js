@@ -6,14 +6,14 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/poject',
-    name: 'poject',
+    path: '/project',
+    name: 'project',
     meta:{
       title:"專案列表",
       icon:"el-icon-tickets",
       show:true
     },
-    component: () => import('../views/poject.vue'),
+    component: () => import('../views/project.vue'),
     children:[]
   },
   {
@@ -22,7 +22,7 @@ const routes = [
     meta:{
       title:"來訪查看",
       icon:"el-icon-tickets",
-      show:true
+      show:false
     },
     component: () => import('../views/viewList.vue'),
     children:[]
@@ -46,7 +46,7 @@ const routes = [
       icon:"el-icon-edit-outline",
       show:true
     },
-    component: () => import('../views/resumeEdit.vue'),
+    component: () => import('../views/mail.vue'),
     children:[]
   },
   {
@@ -55,7 +55,7 @@ const routes = [
     meta:{
       title:"聊天室",
       icon:"el-icon-chat-dot-square",
-      show:true
+      show:false
     },
     component: () => import('../views/chartList.vue'),
     children:[]
@@ -71,7 +71,7 @@ const routes = [
     component: () => import('../views/login.vue'),
     children:[]
   },
-  { path: '*', redirect: '/viewList',
+  { path: '*', redirect: '/project',
     meta:{
       show:false
     }

@@ -1,42 +1,54 @@
 <template>
-  <div class="article">
+  <div class="mail">
     <el-dialog :title="isAdd ? '新增':'編輯'" :visible.sync="showEdit" width="50%">
       <div class="formEdit">
         <div class="formEditRow">
           <div class="formEditRowCell" style="width:50%;">
             <div class="formEditRowTitle">專案名稱</div>
             <div class="formEditRowContent">
-              <el-select v-model="form.projectId" placeholder="請選擇">
-                <el-option v-for="item in projectList" :key="item.id" :label="item.title" :value="item.id"></el-option>
-              </el-select>
+              {{$global.getProjectTitle(projectList,form.projectId)}}
             </div>
           </div>
           <div class="formEditRowCell" style="width:50%;">
-            <div class="formEditRowTitle">類型</div>
+            <div class="formEditRowTitle">姓名</div>
             <div class="formEditRowContent">
-              <el-select v-model="form.type" placeholder="請選擇">
-                <el-option v-for="(item,index) in typeList" :key="index" :label="item" :value="item"></el-option>
-              </el-select>
+              {{form.name}}
             </div>
           </div>
         </div>
         <div class="formEditRow">
           <div class="formEditRowCell" style="width:100%;">
-            <div class="formEditRowTitle">標題</div>
+            <div class="formEditRowTitle">信箱</div>
             <div class="formEditRowContent">
-              <el-input v-model="form.title"/>
+              {{form.email}}
             </div>
           </div>
         </div>
-        <quill-editor v-model="form.content"></quill-editor>
-        <div class="boxButtonList">
-          <el-button type="danger" @click="showEdit=!showEdit">取消</el-button>
-          <el-button type="success" @click="sub">提交</el-button>
+        <div class="formEditRow">
+          <div class="formEditRowCell" style="width:50%;">
+            <div class="formEditRowTitle">手機</div>
+            <div class="formEditRowContent">
+              {{form.email}}
+            </div>
+          </div>
+          <div class="formEditRowCell" style="width:50%;">
+            <div class="formEditRowTitle">公司名</div>
+            <div class="formEditRowContent">
+              {{form.company}}
+            </div>
+          </div>
+        </div>
+        <div class="formEditRow">
+          <div class="formEditRowCell" style="width:100%;">
+            <div class="formEditRowTitle">內容</div>
+            <div class="formEditRowContent">
+              {{form.content}}
+            </div>
+          </div>
         </div>
       </div>
     </el-dialog>
     <PageMenu @search="search" @batchDelete="batchDelete">
-      <el-button type="success" @click="isAdd=true;showEdit=!showEdit">新增</el-button>
     </PageMenu>
     <el-table :data="list" style="width: 100%" @selection-change="handleSelectionChange">
       <el-table-column type="selection"></el-table-column>
@@ -45,13 +57,14 @@
           {{$global.getProjectTitle(projectList,scope.row.projectId)}}
         </template>
       </el-table-column>
-      <el-table-column prop="type" label="類型"></el-table-column>
-      <el-table-column prop="title" label="標題"></el-table-column>
+      <el-table-column prop="name" label="姓名"></el-table-column>
+      <el-table-column prop="phone" label="手機"></el-table-column>
+      <el-table-column prop="email" label="email"></el-table-column>
       <el-table-column prop="time" label="建立時間"></el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
           <div class="goRight">
-            <el-button type="warning" @click="edit(scope.row.id)">編輯</el-button>
+            <el-button type="warning" @click="edit(scope.row.id)">詳細</el-button>
             <el-button type="danger" @click="del(scope.row.id)">刪除</el-button>
           </div>
         </template>
@@ -68,22 +81,18 @@ export default {
   data() {
     return {
       list:[],
-      projectList: [],
-      handleSelectionChangeArr: [],
-      showEdit:false,
+      handleSelectionChangeArr:[],
       isAdd:false,
-      typeList: ["新聞","公告","維修","緊急","活動","其他"],
-      blank_form: {
-        projectId:"",
-        title:"",
-        type:"",
-        content:""
-      },
+      showEdit:false,
+      projectList:[],
       form: {
-        projectId:"",
-        title:"",
-        type:"",
-        content:""
+        name:"",
+        phone:"",
+        email:"",
+        company:"",
+        content:"",
+        project:"",
+        time:""
       }
     }
   },
@@ -96,13 +105,13 @@ export default {
   },
   methods: {
     async getData() {
-      this.list=await this.$api.getArticle()
+      this.list=await this.$api.getMail()
     },
     async del(x) {
       let agree=confirm("確定刪除?")
       if(!agree) return 0
       this.$store.dispatch("loading",true)
-      let flag=await this.$api.deleteArticle(x)
+      let flag=await this.$api.deleteMail(x)
       if(flag=="token invalid") {
         this.$store.dispatch("loading",false)
         return 0
@@ -121,7 +130,7 @@ export default {
       if(!this.handleSelectionChangeArr.length) return 0
       this.$store.dispatch("loading",true)
       for(let item of this.handleSelectionChangeArr) {
-        await this.$api.deleteArticle(item.id)
+        await this.$api.deleteMail(item.id)
       }
       await this.getData()
       this.$store.dispatch("loading",false)
@@ -137,7 +146,7 @@ export default {
     },
     async edit (x) {
       this.$store.dispatch("loading",true)
-      let data=await this.$api.getArticleById(x)
+      let data=await this.$api.getMailById(x)
       this.form=data
       this.isAdd=false
       this.showEdit=true
@@ -146,10 +155,10 @@ export default {
     async sub() {
       this.$store.dispatch("loading",true)
       if(this.isAdd) {
-        await this.$api.postArticle(this.form)
+        await this.$api.postMail(this.form)
       }
       else {
-        await this.$api.putArticle(this.form)
+        await this.$api.putMail(this.form)
       }
       await this.getData()
       this.form=this.blank_form

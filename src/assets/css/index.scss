@@ -339,14 +339,15 @@ a {
   }
 
   .article {
-    .articleEdit {
+  }
 
-    }
-    .articleEditRow {
+  .formEdit {
+
+    .formEditRow {
       display: flex;
       margin: 0 0 20px 0;
     }
-    .articleEditRowCell {
+    .formEditRowCell {
       display: flex;
       margin: 0 20px 0 0;
       align-items: center;
@@ -354,10 +355,11 @@ a {
         margin: 0;
       }
     }
-    .articleEditRowTitle {
-      width: 100px;
+    .formEditRowTitle {
+      width: 80px;
     }
-    .articleEditRowContent {
+    .formEditRowContent {
       width: calc(100% - 100px);
     }
+
   }

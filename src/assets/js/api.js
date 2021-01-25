@@ -54,9 +54,45 @@ export default {
     return axios.post(baseUrl+"login",x).then(res=>res.data)
   },
   getProject() {
-    return axios.get(baseUrl+"getProject").then(res=>res.data)
+    return axios.get(baseUrl+"Project").then(res=>res.data)
+  },
+  getProjectById(x) {
+    return axios.get(baseUrl+"ProjectById?id="+x).then(res=>res.data)
+  },
+  postProject(x) {
+    return axios.post(baseUrl+"Project",x).then(res=>res.data)
+  },
+  putProject(x) {
+    return axios.put(baseUrl+"Project",x).then(res=>res.data)
   },
   deleteProject(x) {
-    return axios.delete(baseUrl+"deleteProject?id="+x).then(res=>res.data)
+    return axios.delete(baseUrl+"Project?id="+x).then(res=>res.data)
+  },
+  getMail() {
+    return axios.get(baseUrl+"Mail").then(res=>res.data)
+  },
+  getMailById(x) {
+    return axios.get(baseUrl+"MailById?id="+x).then(res=>res.data)
+  },
+  putMail() {
+    return axios.put(baseUrl+"Mail").then(res=>res.data)
+  },
+  deleteMail(x) {
+    return axios.delete(baseUrl+"Mail?id="+x).then(res=>res.data)
+  },
+  getArticle() {
+    return axios.get(baseUrl+"Article").then(res=>res.data)
+  },
+  getArticleById(x) {
+    return axios.get(baseUrl+"ArticleById?id="+x).then(res=>res.data)
+  },
+  postArticle(x) {
+    return axios.post(baseUrl+"Article",x).then(res=>res.data)
+  },
+  putArticle(x) {
+    return axios.put(baseUrl+"Article",x).then(res=>res.data)
+  },
+  deleteArticle(x) {
+    return axios.delete(baseUrl+"Article?id="+x).then(res=>res.data)
   }
 }
