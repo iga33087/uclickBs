@@ -1,5 +1,6 @@
 <template>
   <div class="article">
+    <input type="file" ref="uploadImg" @change="uploadImg" v-show="false">
     <el-dialog :title="isAdd ? '新增':'編輯'" :visible.sync="showEdit" width="50%">
       <div class="formEdit">
         <div class="formEditRow">
@@ -22,6 +23,15 @@
         </div>
         <div class="formEditRow">
           <div class="formEditRowCell" style="width:100%;">
+            <div class="formEditRowTitle">縮圖</div>
+            <div class="formEditRowContent">
+              <el-button type="primary" @click="$refs.uploadImg.click()">上傳圖片</el-button>
+            </div>
+          </div>
+        </div>
+        <img class="formEditImg" :src="form.img" v-if="form.img">
+        <div class="formEditRow">
+          <div class="formEditRowCell" style="width:100%;">
             <div class="formEditRowTitle">標題</div>
             <div class="formEditRowContent">
               <el-input v-model="form.title"/>
@@ -36,7 +46,7 @@
       </div>
     </el-dialog>
     <PageMenu @search="search" @batchDelete="batchDelete">
-      <el-button type="success" @click="isAdd=true;showEdit=!showEdit">新增</el-button>
+      <el-button type="success" @click="add">新增</el-button>
     </PageMenu>
     <el-table :data="list" style="width: 100%" @selection-change="handleSelectionChange">
       <el-table-column type="selection"></el-table-column>
@@ -77,13 +87,15 @@ export default {
         projectId:"",
         title:"",
         type:"",
-        content:""
+        content:"",
+        img:""
       },
       form: {
         projectId:"",
         title:"",
         type:"",
-        content:""
+        content:"",
+        img:""
       }
     }
   },
@@ -155,6 +167,10 @@ export default {
       this.form=this.blank_form
       this.showEdit=false
       this.$store.dispatch("loading",false)
+    },
+    async uploadImg(e) {
+      let file=e.target.files[0]
+      this.form.img=await this.$global.fileToBase64(file)
     }
   }
 }

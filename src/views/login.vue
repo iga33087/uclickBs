@@ -33,7 +33,7 @@ export default {
       await this.$api.login(this.form).then(res=> {
         if(res.success) {
           localStorage.token=res.token
-          this.$router.push({name:"viewList"})
+          this.$router.push({name:"project"})
         }
         else {
           alert("帳號或密碼錯誤")

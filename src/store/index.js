@@ -6,7 +6,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     loading:false,
-    chartList:[]
+    chartList:[],
+    userInfo:"",
   },
   mutations: {
     loading(state,data) {
@@ -14,6 +15,9 @@ export default new Vuex.Store({
     },
     chartList(state,data) {
       state.chartList=data
+    },
+    userInfo(state,data) {
+      state.userInfo=data
     }
   },
   actions: {
@@ -22,6 +26,9 @@ export default new Vuex.Store({
     },
     chartList({ commit },data) {
       commit('chartList',data)
+    },
+    userInfo({ commit },data) {
+      commit('userInfo',data)
     }
   },
   modules: {

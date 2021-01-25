@@ -53,6 +53,9 @@ export default {
   login(x) {
     return axios.post(baseUrl+"login",x).then(res=>res.data)
   },
+  getUserInfoByToken() {
+    return axios.post(baseUrl+"userInfoByToken").then(res=>res.data)
+  },
   getProject() {
     return axios.get(baseUrl+"Project").then(res=>res.data)
   },

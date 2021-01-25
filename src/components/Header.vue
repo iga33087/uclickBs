@@ -7,7 +7,12 @@
         </router-link>
       </div>
     </div>
-    <div class="headerAccount" @click="logout">最高管理員</div>
+    <el-dropdown class="headerAccount" trigger="click" v-if="$store.state.userInfo&&$store.state.userInfo.name">
+      <span>{{$store.state.userInfo.name}}</span>
+      <el-dropdown-menu slot="dropdown">
+        <el-dropdown-item @click.native="logout">登出</el-dropdown-item>
+      </el-dropdown-menu>
+    </el-dropdown>
   </div>
 </template>
 
@@ -35,6 +40,7 @@ export default {
       let flag=confirm("確定登出?")
       if(!flag) return 0
       localStorage.token=""
+      this.$store.dispatch('userInfo','')
       this.$router.push({name:"login"}).catch(err=> {
         return err
       })
