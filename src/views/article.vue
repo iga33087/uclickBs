@@ -31,10 +31,16 @@
         </div>
         <img class="formEditImg" :src="form.img" v-if="form.img">
         <div class="formEditRow">
-          <div class="formEditRowCell" style="width:100%;">
+          <div class="formEditRowCell" style="width:50%;">
             <div class="formEditRowTitle">標題</div>
             <div class="formEditRowContent">
               <el-input v-model="form.title"/>
+            </div>
+          </div>
+          <div class="formEditRowCell" style="width:50%;">
+            <div class="formEditRowTitle">作者</div>
+            <div class="formEditRowContent">
+              <el-input v-model="form.author"/>
             </div>
           </div>
         </div>
@@ -86,6 +92,7 @@ export default {
       blank_form: {
         projectId:"",
         title:"",
+        author:"",
         type:"",
         content:"",
         img:""
@@ -93,6 +100,7 @@ export default {
       form: {
         projectId:"",
         title:"",
+        author:"",
         type:"",
         content:"",
         img:""
@@ -143,7 +151,7 @@ export default {
       console.log(this.handleSelectionChangeArr)
     },
     async add() {
-      this.form=this.blank_form
+      this.form=JSON.parse(JSON.stringify(this.blank_form))
       this.isAdd=true
       this.showEdit=true
     },
@@ -164,7 +172,7 @@ export default {
         await this.$api.putArticle(this.form)
       }
       await this.getData()
-      this.form=this.blank_form
+      this.form=JSON.parse(JSON.stringify(this.blank_form))
       this.showEdit=false
       this.$store.dispatch("loading",false)
     },

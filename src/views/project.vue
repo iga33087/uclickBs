@@ -106,7 +106,7 @@ export default {
       console.log(this.handleSelectionChangeArr)
     },
     async add() {
-      this.form=this.blank_form
+      this.form=JSON.parse(JSON.stringify(this.blank_form))
       this.isAdd=true
       this.showEdit=true
     },
@@ -127,7 +127,7 @@ export default {
         await this.$api.putProject(this.form)
       }
       await this.getData()
-      this.form=this.blank_form
+      this.form=JSON.parse(JSON.stringify(this.blank_form))
       this.showEdit=false
       this.$store.dispatch("loading",false)
     }
