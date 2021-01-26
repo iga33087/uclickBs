@@ -1,5 +1,5 @@
 module.exports = {
-  publicPath: "/uclickBs/",
+  publicPath: "/",
   chainWebpack: (config) => {
     config.module.rules.delete("eslint");
   },
