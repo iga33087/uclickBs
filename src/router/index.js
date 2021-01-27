@@ -71,7 +71,7 @@ const routes = [
     component: () => import('../views/login.vue'),
     children:[]
   },
-  { path: '*', redirect: '/project',
+  { path: '*', redirect: '/login',
     meta:{
       show:false
     }

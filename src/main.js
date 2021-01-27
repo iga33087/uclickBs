@@ -30,15 +30,26 @@ Vue.prototype.$api=api
 Vue.config.productionTip = false
 
 router.beforeEach(async (to, from, next) => {
-  if(to.path!="/login"&&!localStorage.token) {
-    next({path:"/login"})
+  console.log(to)
+  if(!localStorage.token) {
+    if(to.path!="/login") {
+      next({path:"/login"})
+    }
+    else {
+      next()
+    }
   }
   else {
+    console.log("pass")
     document.title=to.meta.title
     if(!store.state.userInfo) {
       let userInfo=await api.getUserInfoByToken()
       store.dispatch('userInfo',userInfo.data)
       console.log(userInfo)
+      if(!userInfo) {
+        localStorage.token=""
+        next({path:"/login"})
+      }
     }
     next()
   }
