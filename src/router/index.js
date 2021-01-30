@@ -39,6 +39,17 @@ const routes = [
     children:[]
   },
   {
+    path: '/Tag',
+    name: 'Tag',
+    meta:{
+      title:"分類列表",
+      icon:"el-icon-edit-outline",
+      show:true
+    },
+    component: () => import('../views/Tag.vue'),
+    children:[]
+  },
+  {
     path: '/mail',
     name: 'mail',
     meta:{

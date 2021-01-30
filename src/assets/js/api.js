@@ -97,5 +97,20 @@ export default {
   },
   deleteArticle(x) {
     return axios.delete(baseUrl+"Article?id="+x).then(res=>res.data)
+  },
+  getTag() {
+    return axios.get(baseUrl+"Tag").then(res=>res.data)
+  },
+  getTagById(x) {
+    return axios.get(baseUrl+"TagById?id="+x).then(res=>res.data)
+  },
+  postTag(x) {
+    return axios.post(baseUrl+"Tag",x).then(res=>res.data)
+  },
+  putTag(x) {
+    return axios.put(baseUrl+"Tag",x).then(res=>res.data)
+  },
+  deleteTag(x) {
+    return axios.delete(baseUrl+"Tag?id="+x).then(res=>res.data)
   }
 }
