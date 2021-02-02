@@ -15,8 +15,8 @@
           <div class="formEditRowCell" style="width:50%;">
             <div class="formEditRowTitle">類型</div>
             <div class="formEditRowContent">
-              <el-select v-model="form.type" placeholder="請選擇">
-                <el-option v-for="(item,index) in typeList" :key="index" :label="item" :value="item"></el-option>
+              <el-select v-model="form.tagId" placeholder="請選擇" v-if="form.projectId">
+                <el-option v-for="(item,index) in filterTagList" :key="index" :label="item.title" :value="item.id"></el-option>
               </el-select>
             </div>
           </div>
@@ -61,7 +61,11 @@
           {{$global.getProjectTitle(projectList,scope.row.projectId)}}
         </template>
       </el-table-column>
-      <el-table-column prop="type" label="類型"></el-table-column>
+      <el-table-column prop="tagId" label="類型">
+        <template slot-scope="scope">
+          {{$global.getTagTitle(tagList,scope.row.tagId)}}
+        </template>
+      </el-table-column>
       <el-table-column prop="title" label="標題"></el-table-column>
       <el-table-column prop="time" label="建立時間"></el-table-column>
       <el-table-column label="操作">
@@ -84,6 +88,7 @@ export default {
   data() {
     return {
       list:[],
+      tagList:[],
       projectList: [],
       handleSelectionChangeArr: [],
       showEdit:false,
@@ -95,7 +100,8 @@ export default {
         author:"",
         type:"",
         content:"",
-        img:""
+        img:"",
+        tagId:""
       },
       form: {
         projectId:"",
@@ -103,14 +109,22 @@ export default {
         author:"",
         type:"",
         content:"",
-        img:""
+        img:"",
+        tagId:""
       }
+    }
+  },
+  computed: {
+    filterTagList() {
+      let arr=this.tagList.filter(res=>res.projectId==this.form.projectId)
+      return arr
     }
   },
   async created() {
     this.$emit("currentRoute",this.$router.currentRoute)
     this.$store.dispatch("loading",true)
     this.projectList=await this.$api.getProject()
+    this.tagList=await this.$api.getTag()
     await this.getData()
     this.$store.dispatch("loading",false)
   },

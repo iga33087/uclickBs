@@ -20,6 +20,11 @@ export default {
     let res=arr[0] ? arr[0].title : "專案不存在"
     return res
   },
+  getTagTitle(list,x) {
+    let arr=list.filter(res=> res.id==x)
+    let res=arr[0] ? arr[0].title : "無分類"
+    return res
+  },
   fileToBase64(x) {
     return new Promise((resolve) => {
       let fr = new FileReader();
